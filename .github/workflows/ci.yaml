@@ -39,6 +39,7 @@ jobs:
       continue-on-error: true
       with:
         reporter: 'github-pr-review'
+        path: './app'
       env:
           GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
 
