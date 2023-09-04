@@ -39,7 +39,7 @@ jobs:
 
 
     - name: Unit test
-      run: tox -e py
+      run: pytest --cov=app --cov-report=xml --cov-config=tox.ini --cov-branch tests.py
 
     - name: Sonarqube scan
       uses: sonarsource/sonarqube-scan-action@master
