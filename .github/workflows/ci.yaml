@@ -40,7 +40,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest --cov=app --cov-report=term-missing --cov-branch test*
+        pytest --cov=app --cov-report=xml --cov-branch test*
 
 
     - name: Sonarqube scan
