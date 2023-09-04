@@ -37,7 +37,7 @@ jobs:
         python -m pip install tox
 
     - name: Unit test
-      run: pytest --cov=app --cov-report=xml --cov-config=tox.ini --cov-branch tests.py
+      run: tox -e py
 
     - name: Sonarqube scan
       uses: sonarsource/sonarqube-scan-action@master
