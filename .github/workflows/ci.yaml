@@ -44,7 +44,7 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
  
     - name: Linter
-    - uses: rahul-deepsource/pyaction@1.4.0
+      uses: rahul-deepsource/pyaction@1.4.0
     
     - name: Unit test
       run: tox -e py
