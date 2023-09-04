@@ -2,7 +2,7 @@ name: Python workflow
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   python_ci:
