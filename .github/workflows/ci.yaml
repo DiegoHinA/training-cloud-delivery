@@ -34,18 +34,15 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install tox
 
-#    - name: Wemake Python Stylguide
-#      uses: wemake-services/wemake-python-styleguide@master
-#      continue-on-error: true
-#      with:
-#        reporter: 'github-pr-review'
-#        path: './app/api'
-#      env:
-#          GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
+    - name: Wemake Python Stylguide
+      uses: wemake-services/wemake-python-styleguide@master
+      continue-on-error: true
+      with:
+        reporter: 'github-pr-review'
+        path: './app/api'
+      env:
+          GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
  
-    - name: Linter
-      uses: rahul-deepsource/pyaction@1.4.0
-    
     - name: Unit test
       run: tox -e py
     
