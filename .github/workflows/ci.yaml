@@ -35,7 +35,7 @@ jobs:
         python -m pip install tox
 
     - name: Wemake Python Stylguide
-      uses: wemake-services/wemake-python-styleguide@0.13.4
+      uses: wemake-services/wemake-python-styleguide@master
       continue-on-error: true
       with:
         reporter: 'github-pr-review'
