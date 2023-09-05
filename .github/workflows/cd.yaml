@@ -1,0 +1,45 @@
+name: Continous Deployment
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:      
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.build-api-image.outputs.image }}
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Inject slug/short variables
+      uses: rlespinasse/github-slug-action@v2.x
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-eas1-1
+        mask-aws-account-id: 'no'
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push backend image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: training-cloud-delivery
+        IMAGE_TAG: ${{ github.sha }}
+        BRANCH_TAG: ${{ env.GITHUB_REF_SLUG }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      
