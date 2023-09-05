@@ -64,6 +64,7 @@ jobs:
   zap_scan:
     runs-on: ubuntu-latest
     name: Scan ZAP website
+    needs: deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v2
