@@ -5,18 +5,10 @@ on:
   pull_request:
     branches: [ main ]  
 
-jobs:
-#  build:
-#    name: Build
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Build
-#      run: docker build .    
+jobs:  
 
  test:
     name: Quality check
-  #  needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -42,21 +34,20 @@ jobs:
           # Fail if "new" violations detected or "any", default "new"
           failIf: new
     
-#    - name: Wemake Python Stylguide
- #     continue-on-error: true
-##      uses: wemake-services/wemake-python-styleguide@master
- #     with:
- #       reporter: 'github-pr-review'
- #       path: './app/auth'
- #     env:
- #         GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
- 
-#    - name: Unit test
-#      run: tox -e py
+    - name: Unit test
+      run: tox -e py
     
-#    - name: Sonarqube scan
-#      uses: sonarsource/sonarqube-scan-action@master
-#      env:
-#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    - name: Sonarqube scan
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
+ build:
+  name: Build
+  needs: test
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: docker build .  
