@@ -34,14 +34,22 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install tox
 
-    - name: Wemake Python Stylguide
-      uses: wemake-services/wemake-python-styleguide@master
-      continue-on-error: true
-      with:
-        reporter: 'github-pr-review'
-        path: './app/auth'
-      env:
-          GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
+    -   name: Linter
+        uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
+        with:
+          # The GitHub API token to create reviews with
+          token: ${{ secrets.WEMAKE_GITHUB_TOKEN}}
+          # Fail if "new" violations detected or "any", default "new"
+          failIf: new
+    
+#    - name: Wemake Python Stylguide
+ #     continue-on-error: true
+##      uses: wemake-services/wemake-python-styleguide@master
+ #     with:
+ #       reporter: 'github-pr-review'
+ #       path: './app/auth'
+ #     env:
+ #         GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
  
 #    - name: Unit test
 #      run: tox -e py
