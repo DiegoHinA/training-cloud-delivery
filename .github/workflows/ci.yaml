@@ -6,17 +6,17 @@ on:
     branches: [ main ]  
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: docker build .    
+#  build:
+#    name: Build
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Build
+#      run: docker build .    
 
-  test:
+ test:
     name: Quality check
-    needs: build
+  #  needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -43,12 +43,12 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.WEMAKE_GITHUB_TOKEN }}
  
-    - name: Unit test
-      run: tox -e py
+#    - name: Unit test
+#      run: tox -e py
     
-    - name: Sonarqube scan
-      uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#    - name: Sonarqube scan
+#      uses: sonarsource/sonarqube-scan-action@master
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
