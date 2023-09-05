@@ -35,7 +35,7 @@ jobs:
         python -m pip install tox
 
     -   name: Linter
-        uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
+        uses: usama2490/lintly-flake8-github-action@v1.1
         with:
           # The GitHub API token to create reviews with
           token: ${{ secrets.WEMAKE_GITHUB_TOKEN}}
