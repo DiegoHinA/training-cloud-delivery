@@ -51,6 +51,7 @@ jobs:
           image: 017255229468.dkr.ecr.us-east-1.amazonaws.com/training-cloud-delivery:main 
           access-role-arn: ${{ secrets.ROLE_ARN }}
           region: us-east-1
+          port: 5000
           cpu : 1
           memory : 2
           # Deprecated: wait-for-service-stability: true
@@ -59,4 +60,17 @@ jobs:
       
     - name: App Runner URL
       run: echo "App runner URL ${{ steps.deploy-apprunner.outputs.service-url }}" 
-      
+
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.3.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: 'https://dnwvxcpnji.us-east-1.awsapprunner.com/'
