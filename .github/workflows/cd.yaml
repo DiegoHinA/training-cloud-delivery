@@ -74,4 +74,4 @@ jobs:
         uses: zaproxy/action-baseline@v0.3.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: 'https://dnwvxcpnji.us-east-1.awsapprunner.com/'
+          target: 'https://dev.cicd-demo.se.nybblenetwork.com/'
